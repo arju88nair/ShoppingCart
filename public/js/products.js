@@ -1,3 +1,7 @@
+/**
+ * Where the products will be loaded
+ */
+
 $(document).ready(function () {
     $('.loading').show();
     fetch('getProducts')
@@ -43,22 +47,27 @@ $(document).ready(function () {
 })
 
 
+/**
+ * Method for adding/updating cart items
+ * @param id
+ */
+
 function addToCart(id) {
     $('.loading').show();
-    fetch('addToCart?id='+id)
+    fetch('addToCart?id=' + id)
         .then(
             function (response) {
                 $('.loading').hide();
                 if (response.status !== 200) {
+                    console.log(response);
                     console.log('Looks like there was a problem. Status Code: ' +
                         response.status);
-                    return;
+                    toastr["error"]("Something went wrong");
+                    return false;
                 }
-                // Examine the text in the response
+                // Examine the content in the response
                 response.json().then(function (data) {
-                    let products = data.products;
-                    console.log(data.products);
-
+                    toastr["success"](data.message);
                 });
             }
         )

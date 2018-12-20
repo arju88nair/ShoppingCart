@@ -6,6 +6,8 @@ use App\Carts;
 use App\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class UserController extends Controller
 {
@@ -29,32 +31,48 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * Method for adding the item to the cart and doing subsequent operations
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function addToCart(Request $request)
     {
-        $product_id=$request['product_id'];
-        $user=Auth::id();
-        $carts=Carts::where('product_id','=', $product_id)->where('user_id','=',$user)
-            ->get();
-        if(empty($carts))
-        {
-            $cart=new Carts();
-            $cart->product_id=$product_id;
-            $cart->user_id=user_id;
-            $cart->count=1;
-            $is_saved=$cart->save();
-            if($is_saved)
-            {
-            }
+        $product_id = $request['id'];
+
+        if (empty($product_id)) {
+            return response()->json(['message' => 'Product does not exist ', 'status' => Response::$statusTexts['204'], 'code' => Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+
         }
-        return $carts;
-
-        Carts::updateOrCreate(
-            ['product_id' => $product_id, 'user_id' => $user],
-            ['count' => 99]
-        );
 
 
+        $user = Auth::id();
+        $carts = Carts::where('product_id', '=', $product_id)->where('user_id', '=', $user)
+            ->first();
+        if (empty($carts)) {
+
+// Adding to the cart if not found
+            $cart = new Carts();
+            $cart->product_id = $product_id;
+            $cart->user_id = $user;
+            $cart->count = 1;
+            $is_saved = $cart->save();
+            if ($is_saved) {
+                return response()->json(['message' => 'Successfully saved', 'status' => Response::$statusTexts['200'], 'code' => Response::HTTP_OK], Response::HTTP_OK);
+            }
+            return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+        }
+
+// Incrementing the count if product is found for the user
+        $count = (int)$carts['count'];
+        $count++;
+        $carts->count = $count;
+        $is_saved = $carts->save();
+        if ($is_saved) {
+            return response()->json(['message' => 'Successfully updated', 'status' => Response::$statusTexts['200'], 'code' => Response::HTTP_OK], Response::HTTP_OK);
+        }
+        return response()->json(['message' => 'error', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
 
     }
 }

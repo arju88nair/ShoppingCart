@@ -4,6 +4,7 @@
 <link href="{{ asset('css/products.css') }}" rel="stylesheet">
 
 
+
 <div class="col-md-12">
     <div class="container">
         <div class="row" id="productDiv">
