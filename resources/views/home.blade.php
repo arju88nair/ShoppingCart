@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@include('partials.header')
 
-@section('content')
+<main class="py-4">
     <div class="container">
         <div class="loading"></div>
-
         <div class="row justify-content-center">
             <div class="col-md-12">
-@include('partials.products')
+                @include('partials.products')
             </div>
         </div>
     </div>
-@endsection
+</main>
+
+@include('partials.footer')

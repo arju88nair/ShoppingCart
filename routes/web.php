@@ -26,6 +26,9 @@ Route::get('/getProducts', 'UserController@getProducts')
 Route::get('/addToCart', 'UserController@addToCart')
     ->name('addToCart');
 
+Route::get('/productDetail', 'ProductController@productDetail')
+    ->name('productDetail');
+
 Route::get('/admin', 'AdminController@admin')
     ->middleware('is_admin')
     ->name('admin');

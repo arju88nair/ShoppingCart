@@ -24,7 +24,7 @@ $(document).ready(function () {
                                 "                    <div class=\"pi-img-wrapper\">\n" +
                                 "                        <img src=" + item.image + " class=\"img-responsive\" alt=\"Berry Lace Dress\">\n" +
                                 "                        <div>\n" +
-                                "                            <a href=\"#\" class=\"btn\">View</a>\n" +
+                                "                            <a href=\"productDetail\" class=\"btn\">View</a>\n" +
                                 "                        </div>\n" +
                                 "                    </div>\n" +
                                 "                    <h3><a href=\"shop-item.html\">" + item.name + "</a></h3>\n" +
@@ -44,36 +44,7 @@ $(document).ready(function () {
             console.log('Fetch Error :-S', err);
         });
 
-})
+});
 
 
-/**
- * Method for adding/updating cart items
- * @param id
- */
-
-function addToCart(id) {
-    $('.loading').show();
-    fetch('addToCart?id=' + id)
-        .then(
-            function (response) {
-                $('.loading').hide();
-                if (response.status !== 200) {
-                    console.log(response);
-                    console.log('Looks like there was a problem. Status Code: ' +
-                        response.status);
-                    toastr["error"]("Something went wrong");
-                    return false;
-                }
-                // Examine the content in the response
-                response.json().then(function (data) {
-                    toastr["success"](data.message);
-                });
-            }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
-
-}
 
