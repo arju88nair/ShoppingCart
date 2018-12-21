@@ -24,7 +24,7 @@ $(document).ready(function () {
                                 "                    <div class=\"pi-img-wrapper\">\n" +
                                 "                        <img src=" + item.image + " class=\"img-responsive\" alt=\"Berry Lace Dress\">\n" +
                                 "                        <div>\n" +
-                                "                            <a href=\"productDetail\" class=\"btn\">View</a>\n" +
+                                "                            <a href=\"productDetail?id=" + item.id + "\" class=\"btn\">View</a>\n" +
                                 "                        </div>\n" +
                                 "                    </div>\n" +
                                 "                    <h3><a href=\"shop-item.html\">" + item.name + "</a></h3>\n" +

@@ -7,6 +7,7 @@ use App\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use DB;
 
 
 class UserController extends Controller
@@ -74,5 +75,15 @@ class UserController extends Controller
         }
         return response()->json(['message' => 'error', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
 
+    }
+
+
+    public static function cart()
+    {
+        $user = Auth::id();
+        $query = "SELECT p.name,c.count,p.price FROM carts c inner join products p on p.id =c.product_id inner join users u on u.id=c.user_id where u.id=" . $user . "";
+        $items = DB::select($query);
+        $total = DB::select("select SUM(p.price) as price from carts c inner join products p on p.id=c.product_id where c.user_id=". $user . "");
+        return view('checkout', ['items' => $items, 'total' => $total[0]->price]);
     }
 }

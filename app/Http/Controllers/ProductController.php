@@ -26,11 +26,14 @@ class ProductController extends Controller
     public function productDetail(Request $request)
     {
         $product_id = $request['id'];
-        $product=Products::find($product_id);
+        if (!$product_id) {
+            abort(403, 'Not found');
+        }
+        $product = Products::find($product_id);
         $user = Auth::id();
         $is_added = Carts::where('product_id', '=', $product_id)->where('user_id', '=', $user)
             ->first();
-        return view('product',['product'=>$product,'is_added'=>count($is_added)]);
+        return view('product', ['product' => $product, 'is_added' => count($is_added)]);
 
     }
 

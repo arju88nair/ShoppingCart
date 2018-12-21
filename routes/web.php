@@ -19,6 +19,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')
     ->name('home');
 
+Route::get('/cart', 'UserController@cart')
+    ->name('cart');
+
+
 
 Route::get('/getProducts', 'UserController@getProducts')
     ->name('getProducts');
