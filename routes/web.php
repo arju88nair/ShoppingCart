@@ -32,6 +32,9 @@ Route::get('/getProducts', 'UserController@getProducts')
 Route::get('/addToCart', 'UserController@addToCart')
     ->name('addToCart');
 
+Route::get('/removeItem', 'UserController@removeItem')
+    ->name('removeItem');
+
 Route::get('/admin', 'AdminController@admin')
     ->middleware('is_admin')
     ->name('admin');

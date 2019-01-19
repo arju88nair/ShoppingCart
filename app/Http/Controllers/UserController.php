@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function getProducts()
     {
-        $products = Products::all();
+        $products = Products::inRandomOrder()->get();
         return response()->json([
             'products' => $products
         ]);
@@ -48,16 +48,12 @@ class UserController extends Controller
 
         if (empty($product_id)) {
             return response()->json(['message' => 'Product does not exist ', 'status' => Response::$statusTexts['204'], 'code' => Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
-
         }
-
-
         $user = Auth::id();
         $carts = Carts::where('product_id', '=', $product_id)->where('user_id', '=', $user)
             ->first();
         if (empty($carts)) {
-
-        // Adding to the cart if not found
+            // Adding to the cart if not found
             $cart = new Carts();
             $cart->product_id = $product_id;
             $cart->user_id = $user;
@@ -68,7 +64,6 @@ class UserController extends Controller
             }
             return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
         }
-
         // Incrementing the count if product is found for the user
         $count = (int)$carts['count'];
         $count++;
@@ -89,9 +84,17 @@ class UserController extends Controller
     public static function cart()
     {
         $user = Auth::id();
-        $query = "SELECT p.name,c.count,p.price FROM carts c inner join products p on p.id =c.product_id inner join users u on u.id=c.user_id where u.id=" . $user . "";
+        $query = "SELECT p.id, p.name,c.count,p.price,p.details FROM carts c inner join products p on p.id =c.product_id inner join users u on u.id=c.user_id where u.id=" . $user . "";
         $items = DB::select($query);
         $total = DB::select("select SUM(p.price) as price from carts c inner join products p on p.id=c.product_id where c.user_id=" . $user . "");
-        return view('checkout', ['items' => $items, 'total' => $total[0]->price]);
+        return view('checkout', ['items' => $items, 'total' => $total[0]->price, 'count' => count($items)]);
+    }
+
+
+    public static function removeItem(Request $request)
+    {
+        $itemId = $request->get('id');
+
+
     }
 }

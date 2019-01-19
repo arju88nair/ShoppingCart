@@ -35,6 +35,9 @@ $(document).ready(function () {
                                 "            </div>\n")
                         });
                     }
+                    else{
+                        $("#productDiv").append("No products to show")
+                    }
                     console.log(data.products);
 
                 });

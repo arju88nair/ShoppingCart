@@ -2,60 +2,11 @@
 {{--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>--}}
 <script src="{{ asset('js/products.js') }}" defer></script>
 <link href="{{ asset('css/products.css') }}" rel="stylesheet">
-
-
-
 <div class="col-md-12">
     <div class="container">
         <div class="row" id="productDiv">
-
-            <div class="col-md-4">
-                <div class="product-item">
-                    <div class="pi-img-wrapper">
-                        <img src="http://keenthemes.com/assets/bootsnipp/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                        <div>
-                            <a href="#" class="btn">Zoom</a>
-                            <a href="#" class="btn">View</a>
-                        </div>
-                    </div>
-                    <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="javascript:;" class="btn add2cart">Add to cart</a>
-                    <div class="sticker sticker-new"></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <div class="pi-img-wrapper">
-                        <img src="http://keenthemes.com/assets/bootsnipp/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                        <div>
-                            <a href="#" class="btn">Zoom</a>
-                            <a href="#" class="btn">View</a>
-                        </div>
-                    </div>
-                    <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="javascript:;" class="btn add2cart">Add to cart</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <div class="pi-img-wrapper">
-                        <img src="http://keenthemes.com/assets/bootsnipp/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                        <div>
-                            <a href="#" class="btn">Zoom</a>
-                            <a href="#" class="btn">View</a>
-                        </div>
-                    </div>
-                    <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="javascript:;" class="btn add2cart">Add to cart</a>
-                </div>
-            </div>
         </div>
     </div>
-
-
 </div>
 
 

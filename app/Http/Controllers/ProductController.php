@@ -33,8 +33,6 @@ class ProductController extends Controller
         if (!$product_id) {
             abort(403, 'Not found');
         }
-
-        
         // querying and authenticating for the product
         $product = Products::find($product_id);
         $user = Auth::id();
