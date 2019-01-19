@@ -46,3 +46,12 @@ Route::get('/admin', 'AdminController@admin')
 Route::get('/productDetail', 'ProductController@productDetail')
     ->name('productDetail');
 
+
+/**
+ * Redemption routes
+ */
+
+Route::get('/checkCode', 'UserController@checkCode')
+    ->name('checkCode');
+
+

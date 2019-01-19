@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Carts;
 use App\Products;
+use App\Redemption;
+use App\RedemptionUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,6 +92,11 @@ class UserController extends Controller
         return view('checkout', ['items' => $items, 'total' => $total[0]->price, 'count' => count($items)]);
     }
 
+    /**
+     * Removing item from the cart
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public static function removeItem(Request $request)
     {
@@ -101,6 +109,41 @@ class UserController extends Controller
         }
         return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
 
+    }
 
+
+    /**
+     * Checking redemption code
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function checkCode(Request $request)
+    {
+        $code = strtolower($request->get('code'));
+        $code_exists = Redemption::where('code', $code)->first();
+        if (!$code_exists) {
+            return response()->json(['message' => 'Enter a valid code', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+        }
+        $user_redeemed = RedemptionUsers::where('code', $code)->where('user_id', Auth::id())->first();
+        if ($user_redeemed) {
+            return response()->json(['message' => 'Already used', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+        }
+
+
+        /**
+         * Doesn't make sense till I am keeping track of the cart
+         */
+//        $redemption_user = new RedemptionUsers();
+//        $redemption_user->user_id = Auth::id();
+//        $redemption_user->code = $code;
+//        $redemption_user->percentage = $code_exists->percentage;
+//        $is_saved = $redemption_user->save();
+//        if ($is_saved) {
+//            return response()->json(['message' => 'Successfully applied code ' . $code_exists->code, 'name' => $code_exists->code, 'percentage' => $code_exists->percentage, 'status' => Response::$statusTexts['200'], 'code' => Response::HTTP_OK], Response::HTTP_OK);
+//        }
+//        return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+
+
+        return response()->json(['message' => 'Successfully applied code ' . $code_exists->code, 'name' => $code_exists->code, 'percentage' => $code_exists->percentage, 'status' => Response::$statusTexts['200'], 'code' => Response::HTTP_OK], Response::HTTP_OK);
     }
 }

@@ -7,15 +7,22 @@
     <title>Buy Now</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/form-validation.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="{{ asset('js/main.js') }}" defer></script>
+
 </head>
 <body>
 
 <div class="container">
+    <div class="loading"></div>
+
+
     <div class="py-5 text-center">
         <h2>Checkout</h2>
     </div>
@@ -40,17 +47,15 @@
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>
-                        <strong>${{$total}}</strong>
+                        <strong>$<span id="total-amount">{{$total}}</span></strong>
                     </li>
                 </ul>
-                <form class="card p-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Promo code">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary">Redeem</button>
-                        </div>
+                <div class="input-group">
+                    <input type="text" class="form-control  redemption-code" placeholder="Promo code">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary redeem">Redeem</button>
                     </div>
-                </form>
+                </div>
             @else
                 <h5 class="d-flex justify-content-between align-items-center mb-3">Please add items to the cart</h5>
             @endif
