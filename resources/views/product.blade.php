@@ -11,7 +11,6 @@
                     <div class="container-fluid">
                         <div class="wrapper row">
                             <div class="preview col-md-6">
-
                                 <div class="preview-pic tab-content">
                                     <div class="tab-pane active res" id="pic-1"><img class="img-responsive"
                                                                                      src={{$product['image']}} />
@@ -21,7 +20,6 @@
                                     <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
                                                 src={{$product['image']}}></a></li>
                                 </ul>
-
                             </div>
                             <div class="details col-md-6">
                                 <h3 class="product-title">{{$product['name']}}</h3>
@@ -43,10 +41,13 @@
                                 <div class="action">
                                     @if ($is_added === 0)
                                         <button class="add-to-cart btn btn-default" type="button" id="cartButton"
-                                                onclick="addToCart({{$product['id']}})">add to cart
+                                                onclick="addToCart({{$product['id']}})">Add to cart
                                         </button>
                                     @else
                                         <p id="addedButton">Already added in the cart</p>
+                                        <button class="remove-from-cart btn btn-default" type="button" id="removeButton"
+                                                onclick="removeItem({{$product['id']}})">Remove from cart
+                                        </button>
                                     @endif
                                 </div>
                             </div>

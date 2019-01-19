@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)https://getbootstrap.com/docs/4.0/examples/checkout/ -->
 <html lang="en">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>Buy Now</title>
-<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('css/form-validation.css') }}" rel="stylesheet">
-<link href="{{ asset('css/form-validation.css') }}" rel="stylesheet">
-
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Buy Now</title>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/form-validation.css') }}" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
 
@@ -20,33 +22,38 @@
 
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill">{{$count}}</span>
-            </h4>
-            <ul class="list-group mb-3">
-                @foreach ($items as $item)
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0"><a href="productDetail?id={{$item->id}}">{{$item->name}}</a></h6>
-                            <small class="text-muted " id="cart-description">{{$item->details}}</small>
-                        </div>
-                        <span class="text-muted">{{$item->price}}</span>
+            @if ($count > 0)
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                    <span class="badge badge-secondary badge-pill">{{$count}}</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    @foreach ($items as $item)
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0"><a href="productDetail?id={{$item->id}}">{{$item->name}}</a></h6>
+                                <small class="text-muted " id="cart-description">{{$item->details}}</small>
+                            </div>
+                            <span class="text-muted">{{$item->price}}</span>
+                            <i class="fas fa-trash-alt" onclick="removeItem({{$item->id}})"></i>
+                        </li>
+                    @endforeach
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>${{$total}}</strong>
                     </li>
-                @endforeach
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (USD)</span>
-                    <strong>${{$total}}</strong>
-                </li>
-            </ul>
-            <form class="card p-2">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Promo code">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                </ul>
+                <form class="card p-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Promo code">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary">Redeem</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @else
+                <h5 class="d-flex justify-content-between align-items-center mb-3">Please add items to the cart</h5>
+            @endif
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>

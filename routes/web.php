@@ -29,10 +29,10 @@ Route::get('/cart', 'UserController@cart')
 Route::get('/getProducts', 'UserController@getProducts')
     ->name('getProducts');
 
-Route::get('/addToCart', 'UserController@addToCart')
+Route::get('/AddToCart', 'UserController@addToCart')
     ->name('addToCart');
 
-Route::get('/removeItem', 'UserController@removeItem')
+Route::get('/RemoveItem', 'UserController@removeItem')
     ->name('removeItem');
 
 Route::get('/admin', 'AdminController@admin')

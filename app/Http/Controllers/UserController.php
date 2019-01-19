@@ -45,7 +45,6 @@ class UserController extends Controller
     public function addToCart(Request $request)
     {
         $product_id = $request['id'];
-
         if (empty($product_id)) {
             return response()->json(['message' => 'Product does not exist ', 'status' => Response::$statusTexts['204'], 'code' => Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
         }
@@ -93,7 +92,14 @@ class UserController extends Controller
 
     public static function removeItem(Request $request)
     {
-        $itemId = $request->get('id');
+        $item_id = $request->get('id');
+        $user = Auth::id();
+        $removed = Carts::where('product_id', '=', $item_id)->where('user_id', '=', $user)
+            ->delete();
+        if ($removed) {
+            return response()->json(['message' => 'Successfully removed', 'status' => Response::$statusTexts['200'], 'code' => Response::HTTP_OK], Response::HTTP_OK);
+        }
+        return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
 
 
     }
