@@ -23,12 +23,19 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productDetail(Request $request)
     {
         $product_id = $request['id'];
         if (!$product_id) {
             abort(403, 'Not found');
         }
+
+        
+        // querying and authenticating for the product
         $product = Products::find($product_id);
         $user = Auth::id();
         $is_added = Carts::where('product_id', '=', $product_id)->where('user_id', '=', $user)

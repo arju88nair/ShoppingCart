@@ -22,6 +22,10 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Getting all the products from the Model
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function getProducts()
     {
@@ -53,7 +57,7 @@ class UserController extends Controller
             ->first();
         if (empty($carts)) {
 
-// Adding to the cart if not found
+        // Adding to the cart if not found
             $cart = new Carts();
             $cart->product_id = $product_id;
             $cart->user_id = $user;
@@ -65,7 +69,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Something went wrong', 'status' => Response::$statusTexts['400'], 'code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
         }
 
-// Incrementing the count if product is found for the user
+        // Incrementing the count if product is found for the user
         $count = (int)$carts['count'];
         $count++;
         $carts->count = $count;
@@ -77,13 +81,17 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Getting cart contents
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
     public static function cart()
     {
         $user = Auth::id();
         $query = "SELECT p.name,c.count,p.price FROM carts c inner join products p on p.id =c.product_id inner join users u on u.id=c.user_id where u.id=" . $user . "";
         $items = DB::select($query);
-        $total = DB::select("select SUM(p.price) as price from carts c inner join products p on p.id=c.product_id where c.user_id=". $user . "");
+        $total = DB::select("select SUM(p.price) as price from carts c inner join products p on p.id=c.product_id where c.user_id=" . $user . "");
         return view('checkout', ['items' => $items, 'total' => $total[0]->price]);
     }
 }

@@ -12,16 +12,11 @@ class AdminController extends Controller
     public static function admin()
     {
 
-        return "sdds";
+
     }
 
     public static function blah()
     {
-        echo "<pre>";
-        print_r("ssss");
-        echo "</pre>";
-        die;
-        echo "ddd";die;
-        return "sddsssss";
+
     }
 }

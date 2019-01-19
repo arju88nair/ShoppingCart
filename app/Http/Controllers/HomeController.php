@@ -18,7 +18,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Shows the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -27,14 +27,8 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function getProducts()
-    {
-        $products=Products::all();
-        return response()->json([
-            'products' => $products
-        ]);
 
 
 
-    }
+
 }
