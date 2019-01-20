@@ -18,6 +18,7 @@ class CreateRedemptionTable extends Migration
             $table->string('code');
             $table->boolean('status');
             $table->timestamp('expiry');
+            $table->timestamp('percentage');
             $table->timestamps();
         });
     }

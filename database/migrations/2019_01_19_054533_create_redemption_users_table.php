@@ -17,6 +17,7 @@ class CreateRedemptionUsersTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('user_id');
+            $table->string('percentage');
             $table->timestamps();
         });
     }
